@@ -35,7 +35,7 @@
    UILabel *_placeholder;
 }
 
-@property (nonatomic, retain) NSString *placeholderText;
+@property (nonatomic, copy) NSString *placeholderText;
 @property (nonatomic, retain) UIColor *placeholderColor;
 
 @end
