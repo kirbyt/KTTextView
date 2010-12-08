@@ -11,7 +11,7 @@ To use KTTextView, copy the files KTTextView.h and KTTextView.m to your project.
 Screenshots
 -----------
 
-[![](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_m.jpg)](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_o.jpg)
+[![](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_m.jpg)](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_b.jpg)
 
 License
 =======
