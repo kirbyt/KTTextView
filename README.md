@@ -1,17 +1,37 @@
 KTTextView
 ==========
 
-KTTextView derives from UITextView enhancing it with new features. The only new feature at the moment is the **placeholder** property. The **placeholder** property works the same as it does for UITextField.
+KTTextView derives from UITextView enhancing it with new features. The only new feature at the moment is the **placeholderText** property. The **placeholderText** property works the same as it does for UITextField.
+
 
 Using KTTextView
 ----------------
 
 To use KTTextView, copy the files KTTextView.h and KTTextView.m to your project. Replace UITextView in your source code and NIB files with KTTextView.
 
+
+Properties
+----------
+
+**placeholderText**
+
+The string displayed when there is no other text in the text view.
+
+@property (nonatomic, copy) NSString *placeholderText;
+
+
+**placeholderColor**
+
+The color of the placeholder text. The default value is a light gray color.
+
+@property (nonatomic, retain) UIColor *placeholderColor;
+
+
 Screenshots
 -----------
 
 [![](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_m.jpg)](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_b.jpg)
+
 
 License
 =======
