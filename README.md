@@ -1,7 +1,7 @@
 KTTextView
 ==========
 
-KTTextView derives from UITextView enhancing it with new features. The only new feature at the moment is the **placeholderText** property. The **placeholderText** property works the same as it does for UITextField.
+KTTextView derives from UITextView enhancing it with new features. The only new feature at the moment is the **placeholderText** property. The **placeholderText** property works the same as UITextField's placeholder property.
 
 
 Using KTTextView
