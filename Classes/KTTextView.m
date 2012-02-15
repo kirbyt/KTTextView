@@ -61,6 +61,8 @@
    [self sendSubviewToBack:_placeholder];
    
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFocus:) name:UITextViewTextDidBeginEditingNotification object:nil];
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lostFocus:) name:UITextViewTextDidEndEditingNotification object:nil];
 }
 
 - (void)awakeFromNib
@@ -98,6 +100,20 @@
    } else {
       [_placeholder setAlpha:0.0];
    }
+}
+
+- (void)getFocus:(NSNotification *)notification
+{
+    [_placeholder setAlpha:0.0];
+}
+
+- (void)lostFocus:(NSNotification *)notification
+{
+    if ([[self text] length] == 0) {
+        [_placeholder setAlpha:1.0];
+    } else {
+        [_placeholder setAlpha:0.0];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
