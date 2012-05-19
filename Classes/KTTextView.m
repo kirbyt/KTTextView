@@ -27,11 +27,15 @@
 
 #import "KTTextView.h"
 
+@interface KTTextView ()
+@property (nonatomic, retain) UILabel *placeholder;
+@end
 
 @implementation KTTextView
 
 @synthesize placeholderText = _placeholderText;
 @synthesize placeholderColor = _placeholderColor;
+@synthesize placeholder = _placeholder;
 
 - (void)dealloc
 {
@@ -49,18 +53,23 @@
    [self setPlaceholderText:@""];
    [self setPlaceholderColor:[UIColor lightGrayColor]];
    
-   CGRect frame = CGRectMake(8, 8, self.bounds.size.width - 16, 0);
+   if ([self placeholder]) {
+      [[self placeholder] removeFromSuperview];
+      [self setPlaceholder:nil];
+   }
    
-   _placeholder = [[UILabel alloc] initWithFrame:frame];
-   [_placeholder setLineBreakMode:UILineBreakModeWordWrap];
-   [_placeholder setNumberOfLines:0];
-   [_placeholder setBackgroundColor:[UIColor clearColor]];
-   [_placeholder setAlpha:0];
-   [self addSubview:_placeholder];
-   [_placeholder sizeToFit];
-   [self sendSubviewToBack:_placeholder];
-    
-   [_placeholder setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+   CGRect frame = CGRectMake(8, 8, self.bounds.size.width - 16, 0);
+   UILabel *placeholder = [[UILabel alloc] initWithFrame:frame];
+   [placeholder setLineBreakMode:UILineBreakModeWordWrap];
+   [placeholder setNumberOfLines:0];
+   [placeholder setBackgroundColor:[UIColor clearColor]];
+   [placeholder setAlpha:0];
+   [placeholder setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+   [self addSubview:placeholder];
+   [placeholder sizeToFit];
+   [self sendSubviewToBack:placeholder];
+   
+   [self setPlaceholder:placeholder];
    
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFocus:) name:UITextViewTextDidBeginEditingNotification object:nil];
