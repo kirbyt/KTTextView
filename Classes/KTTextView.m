@@ -33,16 +33,14 @@
 
 @implementation KTTextView
 
-@synthesize placeholderText = _placeholderText;
-@synthesize placeholderColor = _placeholderColor;
+//@synthesize placeholderText = _placeholderText;
+//@synthesize placeholderColor = _placeholderColor;
 @synthesize placeholder = _placeholder;
 
 - (void)dealloc
 {
    [[NSNotificationCenter defaultCenter] removeObserver:self];
    
-   [_placeholderText release], _placeholderText = nil;
-   [_placeholderColor release], _placeholderColor = nil;
    [_placeholder release], _placeholder = nil;
    
    [super dealloc];
@@ -50,27 +48,26 @@
 
 - (void)setup
 {
-   [self setPlaceholderText:@""];
-   [self setPlaceholderColor:[UIColor lightGrayColor]];
-   
    if ([self placeholder]) {
       [[self placeholder] removeFromSuperview];
       [self setPlaceholder:nil];
    }
    
-   CGRect frame = CGRectMake(8, 8, self.bounds.size.width - 16, 0);
+   CGRect frame = CGRectMake(8, 8, self.bounds.size.width - 16, 0.0);
    UILabel *placeholder = [[UILabel alloc] initWithFrame:frame];
    [placeholder setLineBreakMode:UILineBreakModeWordWrap];
    [placeholder setNumberOfLines:0];
    [placeholder setBackgroundColor:[UIColor clearColor]];
-   [placeholder setAlpha:0];
-   [placeholder setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+   [placeholder setAlpha:1.0];
+   [placeholder setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+   [placeholder setTextColor:[UIColor lightGrayColor]];
+   [placeholder setText:@""];
    [self addSubview:placeholder];
-   [placeholder sizeToFit];
    [self sendSubviewToBack:placeholder];
    
    [self setPlaceholder:placeholder];
-   
+   [placeholder release];
+
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFocus:) name:UITextViewTextDidBeginEditingNotification object:nil];
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lostFocus:) name:UITextViewTextDidEndEditingNotification object:nil];
@@ -102,7 +99,7 @@
 
 - (void)textChanged:(NSNotification *)notification
 {
-   if ([_placeholderText length] == 0) {
+   if ([[_placeholder text] length] == 0) {
       return;
    }
    
@@ -129,17 +126,45 @@
 
 - (void)drawRect:(CGRect)rect
 {
-   if ([_placeholderText length] > 0) {
-      [_placeholder setAlpha:0.0];
-      [_placeholder setFont:[self font]];
-      [_placeholder setTextColor:_placeholderColor];
-      [_placeholder setText:_placeholderText];
-      [_placeholder sizeToFit];
-   }
-   
-   if ([[self text] length] == 0 && [_placeholderText length] > 0) {
+   [super drawRect:rect];
+   if ([[self text] length] == 0 && [[_placeholder text] length] > 0) {
       [_placeholder setAlpha:1.0];
+   } else {
+      [_placeholder setAlpha:0.0];
    }
+}
+
+- (void)setFont:(UIFont *)font
+{
+   [super setFont:font];
+   [_placeholder setFont:font];
+}
+
+- (NSString *)placeholderText
+{
+   return [_placeholder text];
+}
+
+- (void)setPlaceholderText:(NSString *)placeholderText
+{
+   [_placeholder setText:placeholderText];
+   
+   CGRect frame = _placeholder.frame;
+   CGSize constraint = CGSizeMake(frame.size.width, 42.0f);
+   CGSize size = [placeholderText sizeWithFont:[self font] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];      
+   
+   frame.size.height = size.height;
+   [_placeholder setFrame:frame];
+}
+
+- (UIColor *)placeholderColor
+{
+   return [_placeholder textColor];
+}
+
+- (void)setPlaceholderColor:(UIColor *)placeholderColor
+{
+   [_placeholder setTextColor:placeholderColor];
 }
 
 @end

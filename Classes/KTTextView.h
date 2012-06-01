@@ -30,8 +30,6 @@
 
 @interface KTTextView : UITextView 
 {
-   NSString *_placeholderText;
-   UIColor *_placeholderColor;
    UILabel *_placeholder;
 }
 
