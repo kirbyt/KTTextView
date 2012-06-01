@@ -33,6 +33,11 @@ Screenshots
 [![](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_m.jpg)](http://farm6.static.flickr.com/5049/5243475037_be5c5c998f_b.jpg)
 
 
+Automatic Reference Counting (ARC) Support
+==========================================
+
+If you would like to use KTTextView in your ARC-enabled project, you must [add the `-fno-objc-arc` compiler flag](http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project) to the file KTTextView.m.
+
 License
 =======
 
