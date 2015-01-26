@@ -55,7 +55,7 @@
    
    CGRect frame = CGRectMake(8, 8, self.bounds.size.width - 16, 0.0);
    UILabel *placeholder = [[UILabel alloc] initWithFrame:frame];
-   [placeholder setLineBreakMode:UILineBreakModeWordWrap];
+   [placeholder setLineBreakMode:NSLineBreakByWordWrapping];
    [placeholder setNumberOfLines:0];
    [placeholder setBackgroundColor:[UIColor clearColor]];
    [placeholder setAlpha:1.0];
@@ -151,9 +151,15 @@
    
    CGRect frame = _placeholder.frame;
    CGSize constraint = CGSizeMake(frame.size.width, 42.0f);
-   CGSize size = [placeholderText sizeWithFont:[self font] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];      
+   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+   paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+   paragraphStyle.alignment = NSTextAlignmentLeft;
    
-   frame.size.height = size.height;
+   NSDictionary *attributes = @{NSFontAttributeName : self.font,
+                                 NSParagraphStyleAttributeName : paragraphStyle};
+   CGRect size = [placeholderText boundingRectWithSize:constraint options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+    
+    frame.size.height = size.size.height;
    [_placeholder setFrame:frame];
 }
 
